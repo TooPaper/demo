@@ -19,7 +19,11 @@ public class Person {
     private int id;
 
     private String name;
+
     private String email;
+
     private LocalDateTime birthday;
+
     private User user;
+
 }
