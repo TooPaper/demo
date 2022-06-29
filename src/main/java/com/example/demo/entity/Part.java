@@ -1,6 +1,5 @@
-package com.example.demo.dto;
+package com.example.demo.entity;
 
-import com.example.demo.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,15 +14,16 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PersonVO {
+public class Part {
+
     private int id;
+
     private String name;
+
     private String email;
+
     private LocalDateTime birthday;
+
     private User user;
 
-    @Override
-    public String toString() {
-        return "id:" + id + "name: " + id + "email: " + email + "birthday: " + birthday + "user: " + user + "\n";
-    }
 }

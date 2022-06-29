@@ -1,0 +1,9 @@
+server:
+  port: 8991
+  servlet:
+    encoding:
+      force: true
+spring:
+  profiles:
+    active:
+
