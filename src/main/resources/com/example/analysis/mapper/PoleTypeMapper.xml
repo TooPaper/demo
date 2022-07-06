@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.analysis.mapper.PoleTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.analysis.entity.PoleType">
+        <id column="id" property="id" />
+        <result column="type_code" property="typeCode" />
+        <result column="parent_type_code" property="parentTypeCode" />
+        <result column="type_name" property="typeName" />
+        <result column="create_user" property="createUser" />
+        <result column="create_date" property="createDate" />
+        <result column="update_user" property="updateUser" />
+        <result column="update_date" property="updateDate" />
+        <result column="state" property="state" />
+    </resultMap>
+    <resultMap id="BaseResultMapVo" type="com.example.analysis.dao.vo.PoleTypeVo">
+
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, type_code, parent_type_code, type_name, create_user, create_date, update_user, update_date, state
+    </sql>
+
+	<!--  分页查詢杆样式颜色类型  -->
+	<select id="pageByParam" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/>
+		FROM demo.pole_type
+	</select>
+
+</mapper>
