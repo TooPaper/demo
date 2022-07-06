@@ -5,5 +5,5 @@ server:
       force: true
 spring:
   profiles:
-    active:
+    active: dev
 
