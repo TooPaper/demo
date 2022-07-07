@@ -11,7 +11,12 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 
 /**
- * @Author demo
+ * <p>
+ * 控制器结果集
+ * </p>
+ *
+ * @author init
+ * @since 2022-07-07
  */
 @ApiModel("返回结果")
 public class Result<T> implements Serializable {

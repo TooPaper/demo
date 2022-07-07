@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.example.utils.DateTimeUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
@@ -18,8 +19,12 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 /**
+ * <p>
  * 代码生成器配置类
- * @Author demo
+ * </p>
+ *
+ * @author init
+ * @since 2022-07-07
  */
 public class DevelopCodeGenerator {
 
@@ -240,8 +245,9 @@ public class DevelopCodeGenerator {
 							.append("import java.util.Arrays;");
 				}else if (line.contains("@RequestMapping")){
 					buf
-							.append(line.substring(0,1).replace("@", "@RequestMapping(\"/" + smName + "\")"))
-							.append("\n@Api(value =\"").append(moduleName).append("\", tags = \"").append(moduleName).append("管理").append("\")\n");
+							.append(line.substring(0,1).replace("@", "@RequestMapping(\"/" + smName + "\")\n"))
+							.append("@CrossOrigin\n")
+							.append("@Api(value =\"").append(moduleName).append("\", tags = \"").append(moduleName).append("管理").append("\")\n");
 				}else if (line.contains("{")){
 					buf.append(line).append("\n\n")
 							.append("\tpublic final static Logger logger = LoggerFactory.getLogger(").append(bigName).append("Controller.class);\n\n")
@@ -307,12 +313,6 @@ public class DevelopCodeGenerator {
 							.append("\t\t}\n")
 							.append("\t}\n\n")
 					;
-//					//删除
-//					buf.append("\t@GetMapping(value =\"/delete\")\n")
-//							.append("\t@ApiOperation(value = \"删除").append(moduleName).append("\", notes = \"删除").append(moduleName).append("\")\n")
-//							.append("\tpublic BaseResponse<Integer> delete").append(bigName).append("(@RequestParam String id) {\n" +
-//							"\t    return ").append(smName).append("Service.delete").append(smName).append("(id);\n    }\n\n");
-
 				}
 				else{
 					buf.append(line).append("\n");
@@ -486,7 +486,6 @@ public class DevelopCodeGenerator {
 	/**
 	 * entity代码生成
 	 * @param filePath 文件路径
-	 * @param bigName 类名
 	 * @return 自动生成的代码
 	 * @throws Exception
 	 */
@@ -611,7 +610,7 @@ public class DevelopCodeGenerator {
 					"import org.mapstruct.Mapper;\n" +
 					"import org.mapstruct.factory.Mappers;\n\n" +
 					"import java.util.List;\n\n" +
-					"/**\n" + " * @Author: " + AUTHOR + "\n * @Date: " + LocalDateTime.now() + "\n */\n" +
+					"/**\n" + " * <p>\n" + " * " + moduleName + " 转换器\n" + " * </p>\n" + " *\n" + " * @author " + AUTHOR + "\n * @since " + DateTimeUtils.formatDate(LocalDateTime.now()) + "\n */\n" +
 					"@ApiModel(value=\"" + bigName + "Converter\", description=\"" +
 					moduleName + "转换器\")\n@Mapper(componentModel = \"Spring\")\npublic interface I" + bigName + "Converter {\n\n" +
 					"\tI" + bigName + "Converter" + " INSTANCE = Mappers.getMapper(I" +
@@ -640,7 +639,7 @@ public class DevelopCodeGenerator {
 					"import io.swagger.annotations.ApiModelProperty;\n" +
 					"import lombok.Data;\n" +
 					"import lombok.EqualsAndHashCode;\n\n" +
-					"/**\n * @Author: " + AUTHOR + "\n * @Date: " + LocalDateTime.now() + "\n */\n" +
+					"/**\n" + " * <p>\n" + " * " + moduleName + " 传参对象\n" + " * </p>\n" + " *\n" + " * @author " + AUTHOR + "\n * @since " + DateTimeUtils.formatDate(LocalDateTime.now()) + "\n */\n" +
 					"@Data\n" +
 					"@EqualsAndHashCode(callSuper = true)\n" +
 					"@ApiModel(value=\"" + bigName + "Param\", description=\"" + moduleName + "传参对象\")\n" +
@@ -664,7 +663,7 @@ public class DevelopCodeGenerator {
 					"import io.swagger.annotations.ApiModelProperty;\n" +
 					"import lombok.Data;\n" +
 					"import lombok.EqualsAndHashCode;\n\n" +
-					"/**\n * @Author: " + AUTHOR + "\n * @Date: " + LocalDateTime.now() + "\n */\n" +
+					"/**\n" + " * <p>\n" + " * " + moduleName + " Vo对象\n" + " * </p>\n" + " *\n" + " * @author " + AUTHOR + "\n * @since " + DateTimeUtils.formatDate(LocalDateTime.now()) + "\n */\n" +
 					"@Data\n" +
 					"@EqualsAndHashCode()\n" +
 					"@ApiModel(value=\"" + bigName + "Vo\", description=\"" + moduleName + "Vo对象\")\n" +

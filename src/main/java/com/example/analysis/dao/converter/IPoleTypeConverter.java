@@ -9,8 +9,12 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 
 /**
- * @Author: demo
- * @Date: 2022-07-07T13:32:06.361
+ * <p>
+ * 杆样式颜色类型 转换器
+ * </p>
+ *
+ * @author demo
+ * @since 2022-07-07
  */
 @ApiModel(value="PoleTypeConverter", description="杆样式颜色类型转换器")
 @Mapper(componentModel = "Spring")

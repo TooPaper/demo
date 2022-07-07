@@ -30,8 +30,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2022-07-07
  */
 @RestController
-@RequestMapping("/poleType")
-@Api(value ="杆样式颜色类型", tags = "杆样式颜色类型管理")
+@RequestMapping("/api/part")
+@CrossOrigin
+@Api(value ="配件解析", tags = "配件解析")
 public class PoleTypeController {
 
 	public final static Logger logger = LoggerFactory.getLogger(PoleTypeController.class);

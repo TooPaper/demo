@@ -5,7 +5,12 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 /**
- * @Author demo
+ * <p>
+ * 分页传参
+ * </p>
+ *
+ * @author init
+ * @since 2022-07-07
  */
 @Data
 @ToString

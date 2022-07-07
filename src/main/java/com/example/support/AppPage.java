@@ -10,7 +10,12 @@ import java.util.List;
 import java.util.function.Predicate;
 
 /**
- * @Author demo
+ * <p>
+ * 分页工具
+ * </p>
+ *
+ * @author init
+ * @since 2022-07-07
  */
 public class AppPage<T> implements IPage<T> {
 

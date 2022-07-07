@@ -3,7 +3,12 @@ package com.example.utils;
 import java.util.List;
 
 /**
- * @author demo
+ * <p>
+ * 分页工具
+ * </p>
+ *
+ * @author init
+ * @since 2022-07-07
  */
 public class PageUtil {
 

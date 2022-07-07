@@ -13,7 +13,12 @@ import lombok.*;
 import java.util.List;
 
 /**
- * @Author demo
+ * <p>
+ * 分页结果集
+ * </p>
+ *
+ * @author init
+ * @since 2022-07-07
  */
 @Data
 @ToString

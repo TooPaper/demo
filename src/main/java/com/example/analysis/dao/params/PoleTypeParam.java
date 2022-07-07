@@ -7,8 +7,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Author: demo
- * @Date: 2022-07-07T13:32:06.361
+ * <p>
+ * 杆样式颜色类型 传参对象
+ * </p>
+ *
+ * @author demo
+ * @since 2022-07-07
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

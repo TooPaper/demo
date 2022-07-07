@@ -5,8 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Description 错误提示
- * @Author demo
+ * <p>
+ * 错误提示
+ * </p>
+ *
+ * @author demo
+ * @since 2022-07-07
  */
 @Getter
 @AllArgsConstructor

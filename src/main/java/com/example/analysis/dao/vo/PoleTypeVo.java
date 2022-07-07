@@ -8,8 +8,12 @@ import lombok.EqualsAndHashCode;
 import java.time.LocalDateTime;
 
 /**
- * @Author: demo
- * @Date: 2022-07-06T17:06:53.165
+ * <p>
+ * 杆样式颜色类型 Vo对象
+ * </p>
+ *
+ * @author demo
+ * @since 2022-07-07
  */
 @Data
 @EqualsAndHashCode()

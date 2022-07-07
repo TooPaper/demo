@@ -6,8 +6,8 @@ import lombok.Getter;
 
 /**
  * @Description 杆-类型
- * @Author snq
- * @Date 2022/6/5 14:39
+ * @author snq
+ * @since 2022/6/5 14:39
  */
 @Getter
 @AllArgsConstructor

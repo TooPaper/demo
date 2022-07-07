@@ -1,7 +1,12 @@
 package com.example.support;
 
 /**
- * @Author demo
+ * <p>
+ * 状态码 方法接口
+ * </p>
+ *
+ * @author init
+ * @since 2022-07-07
  */
 public interface ISystemCode {
 

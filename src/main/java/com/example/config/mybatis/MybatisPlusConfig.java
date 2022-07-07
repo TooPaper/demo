@@ -1,4 +1,4 @@
-package com.example.config;
+package com.example.config.mybatis;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
@@ -7,6 +7,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * <p>
+ * mybatis-plus 配置
+ * </p>
+ *
+ * @author init
+ * @since 2022-07-07
+ */
 @Configuration
 @EnableTransactionManagement
 public class MybatisPlusConfig {

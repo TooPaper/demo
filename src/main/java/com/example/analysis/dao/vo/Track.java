@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * @Description TODO
- * @Author snq
- * @Date 2022/4/28 16:36
+ * @author snq
+ * @since 2022/4/28 16:36
  */
 @Data
 @NoArgsConstructor

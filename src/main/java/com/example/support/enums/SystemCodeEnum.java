@@ -3,7 +3,12 @@ package com.example.support.enums;
 import com.example.support.ISystemCode;
 
 /**
- * @Author demo
+ * <p>
+ * 状态码
+ * </p>
+ *
+ * @author init
+ * @since 2022-07-07
  */
 public enum SystemCodeEnum implements ISystemCode {
 

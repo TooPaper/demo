@@ -1,4 +1,4 @@
-package com.example.config.Handler;
+package com.example.config.mybatis;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -8,8 +8,12 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 /**
- * @author demo
- * @Data 2021/8/23
+ * <p>
+ * mybatis-plus 自动赋值
+ * </p>
+ *
+ * @author init
+ * @since 2022-07-07
  */
 @Slf4j
 @Component

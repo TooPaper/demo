@@ -20,9 +20,12 @@ import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
 /**
- * @Description 接口文档配置
- * @Author snq
- * @Date 2022/6/5 14:31
+ * <p>
+ * 接口文档配置
+ * </p>
+ *
+ * @author init
+ * @since 2022-07-07
  */
 @Configuration
 @EnableSwagger2
