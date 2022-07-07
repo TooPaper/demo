@@ -23,7 +23,7 @@ import java.util.*;
  */
 public class DevelopCodeGenerator {
 
-	/**添加的模块的名称*/
+	/**新增的模块的名称*/
 	private static String moduleName = "杆样式颜色类型";
 	/**表名称*/
 	private static String tableName = "pole_type";
@@ -34,16 +34,10 @@ public class DevelopCodeGenerator {
 
 	/**代码后端生成的地址*/
 	private final static String PACKAGE_DIR = System.getProperty("user.dir");
-	/**生成到项目中*/
-	private final static String OUTPUT_DIR_JAVA = PACKAGE_DIR + "/src/main/java";
-	private final static String OUTPUT_DIR_RESOURCES = PACKAGE_DIR + "/src/main/resources";
 	/**代码生成的包名*/
 	private final static String PACKAGE_NAME ="com.example.analysis";
 	/**代码模块包名*/
 	private final static String MODULE_PACKAGE_NAME ="";
-	/**项目路径*/
-	private final static String JAVA_FILE_PATH = OUTPUT_DIR_JAVA + "/" + PACKAGE_NAME.replaceAll("\\.", "/");
-	private final static String RESOURCES_FILE_PATH = OUTPUT_DIR_RESOURCES + "/" + PACKAGE_NAME.replaceAll("\\.", "/");
 
 	/**MySQL数据源配置*/
 	private final static String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
@@ -87,7 +81,7 @@ public class DevelopCodeGenerator {
 
 		gc.setOpen(false);
 		gc.setFileOverride(true);
-		gc.setOutputDir(OUTPUT_DIR_JAVA);
+		gc.setOutputDir(getOutputDirJava());
 		gc.setAuthor(AUTHOR);
 
 //		gc.setOpen(false);
@@ -195,15 +189,15 @@ public class DevelopCodeGenerator {
 		// controller代码生成
 		write(filepathMap.get("Controller"), controllerRead(filepathMap.get("Controller"), bigName, smName));
 		// service代码生成
-		write(filepathMap.get("Service"), serviceRead(filepathMap.get("Service"), bigName, smName));
+		write(filepathMap.get("Service"), serviceRead(filepathMap.get("Service"), bigName));
 		// serviceImpl代码生成
-		write(filepathMap.get("ServiceImpl"), serviceImplRead(filepathMap.get("ServiceImpl"), bigName, smName));
+		write(filepathMap.get("ServiceImpl"), serviceImplRead(filepathMap.get("ServiceImpl"), bigName));
 		// entity 代码生成
-		write(filepathMap.get("Entity"), entityRead(filepathMap.get("Entity"), bigName, smName));
+		write(filepathMap.get("Entity"), entityRead(filepathMap.get("Entity")));
 		// mapper代码生成
-		write(filepathMap.get("Mapper"), mapperRead(filepathMap.get("Mapper"), bigName, smName));
+		write(filepathMap.get("Mapper"), mapperRead(filepathMap.get("Mapper"), bigName));
 		// xml代码生成
-		write(filepathMap.get("Xml"), xmlRead(filepathMap.get("Xml"), bigName, smName));
+		write(filepathMap.get("Xml"), xmlRead(filepathMap.get("Xml"), bigName));
 
 		// 自定义生成文件
 		// Converter代码生成(要先创建文件)
@@ -243,7 +237,7 @@ public class DevelopCodeGenerator {
 							.append("import org.slf4j.LoggerFactory;\n")
 							.append("import org.springframework.beans.factory.annotation.Autowired;\n")
 							.append("import org.springframework.web.bind.annotation.*;\n\n")
-							.append("import java.util.List;\n");
+							.append("import java.util.Arrays;");
 				}else if (line.contains("@RequestMapping")){
 					buf
 							.append(line.substring(0,1).replace("@", "@RequestMapping(\"/" + smName + "\")"))
@@ -255,45 +249,69 @@ public class DevelopCodeGenerator {
 							.append("\tI").append(bigName).append("Service  ").append(smName).append("Service;\n\n")
 							// 分页
 							.append("\t@PostMapping(value =\"/page\", produces = \"application/json;charset=UTF-8\")\n")
-							.append("\t@ApiOperation(value = \"分页").append(moduleName).append("\", notes = \"分页").append(moduleName).append("\")\n")
-							.append("\tpublic Result<PageResult<").append(bigName).append("Vo>> page").append(bigName).append("(@RequestBody @ApiParam(name = \"传入json格式").append("\",\n")
-							.append("\t\t\tvalue = \"参数：\", required = true) ").append(bigName).append("Param param){\n")
+							.append("\t@ApiOperation(value = \"").append(moduleName).append("分页\", notes = \"分页").append(moduleName).append("\")\n")
+							.append("\tpublic Result<PageResult<").append(bigName).append("Vo>> page").append(bigName).append("Vo(@RequestBody @ApiParam(name = \"传入json格式").append("\",\n")
+							.append("\t\t\tvalue = \"参数：\", required = true) ").append(bigName).append("Param param) {\n")
 							.append("\t\ttry {\n")
 							.append("\t\t\treturn Result.success(").append(smName).append("Service.page").append(bigName).append("Vo(param));\n")
 							.append("\t\t} catch (Exception e) {\n")
 							.append("\t\t\tlogger.error(\"分页").append(moduleName).append("失败\", e);\n")
 							.append("\t\t\treturn Result.error(BizErrorCodeEnum.BIZ_UNKNOWN_EXCEPTION);\n")
 							.append("\t\t}\n")
-							.append("\t}\n\n");
-
-//					//添加
-//					buf.append("\t@PostMapping(value =\"/add\")\n")
-//							.append("\t@ApiOperation(value = \"添加").append(moduleName).append("\", notes = \"添加").append(moduleName).append("\")\n")
-//							.append("\tpublic BaseResponse<").append(bigName).append("> add").append(bigName).append("(@RequestBody ")
-//							.append(bigName).append(" ").append(smName).append("){\n" +
-//							"\t    return ").append(smName).append("Service.add").append(smName).append("(").append(smName).append(");\n    }\n\n");
-//					//编辑
-//					buf.append("\t@PostMapping(value =\"/update\")\n")
-//							.append("\t@ApiOperation(value = \"编辑").append(moduleName).append("\", notes = \"编辑").append(moduleName).append("\")\n")
-//							.append("\tpublic BaseResponse<Integer> update").append(bigName).append("(@RequestBody ")
-//							.append(bigName).append(" ").append(smName).append("){\n" +
-//							"\t    return ").append(smName).append("Service.update").append(smName).append("(").append(smName).append(");\n    }\n\n");
+							.append("\t}\n\n")
+							// 详情
+							.append("\t@GetMapping(value =\"/view/{id}\")\n")
+							.append("\t@ApiOperation(value = \"").append(moduleName).append("详情\", notes = \"详情").append(moduleName).append("\")\n")
+							.append("\tpublic Result<").append(bigName).append("Vo> view").append(bigName).append("Vo(@PathVariable Long id) {\n")
+							.append("\t\ttry {\n")
+							.append("\t\t\treturn Result.success(").append(smName).append("Service.view").append(bigName).append("Vo(id));\n")
+							.append("\t\t} catch (Exception e) {\n")
+							.append("\t\t\tlogger.error(\"详情").append(moduleName).append("失败\", e);\n")
+							.append("\t\t\treturn Result.error(BizErrorCodeEnum.BIZ_UNKNOWN_EXCEPTION);\n")
+							.append("\t\t}\n")
+							.append("\t}\n\n")
+							// 编辑
+							.append("\t@PostMapping(value =\"/edit\", produces = \"application/json;charset=UTF-8\")\n")
+							.append("\t@ApiOperation(value = \"").append(moduleName).append("编辑\", notes = \"编辑").append(moduleName).append("\")\n")
+							.append("\tpublic Result<Integer> edit").append(bigName).append("Vo(@RequestBody @ApiParam(name = \"传入json格式").append("\",\n")
+							.append("\t\t\tvalue = \"参数：\", required = true) ").append(bigName).append("Vo vo) {\n")
+							.append("\t\ttry {\n")
+							.append("\t\t\treturn Result.success(").append(smName).append("Service.edit").append(bigName).append("Vo(vo));\n")
+							.append("\t\t} catch (Exception e) {\n")
+							.append("\t\t\tlogger.error(\"编辑").append(moduleName).append("失败\", e);\n")
+							.append("\t\t\treturn Result.error(BizErrorCodeEnum.BIZ_UNKNOWN_EXCEPTION);\n")
+							.append("\t\t}\n")
+							.append("\t}\n\n")
+							// 新增
+							.append("\t@PostMapping(value =\"/add\", produces = \"application/json;charset=UTF-8\")\n")
+							.append("\t@ApiOperation(value = \"").append(moduleName).append("新增\", notes = \"新增").append(moduleName).append("\")\n")
+							.append("\tpublic Result<").append(bigName).append("Vo> add").append(bigName).append("Vo(@RequestBody @ApiParam(name = \"传入json格式").append("\",\n")
+							.append("\t\t\tvalue = \"参数：\", required = true) ").append(bigName).append("Vo vo) {\n")
+							.append("\t\ttry {\n")
+							.append("\t\t\treturn Result.success(").append(smName).append("Service.add").append(bigName).append("Vo(vo));\n")
+							.append("\t\t} catch (Exception e) {\n")
+							.append("\t\t\tlogger.error(\"新增").append(moduleName).append("失败\", e);\n")
+							.append("\t\t\treturn Result.error(BizErrorCodeEnum.BIZ_UNKNOWN_EXCEPTION);\n")
+							.append("\t\t}\n")
+							.append("\t}\n\n")
+							// 删除
+							.append("\t@GetMapping(value =\"/remove/{ids}\", produces = \"application/json;charset=UTF-8\")\n")
+							.append("\t@ApiOperation(value = \"").append(moduleName).append("删除\", notes = \"删除").append(moduleName).append("\")\n")
+							.append("\t@ApiImplicitParam(name = \"ids\", value = \"ids\", required = true, dataType = \"Long\", allowMultiple = true, example = \"0\", paramType = \"path\")\n")
+							.append("\tpublic Result<Integer> remove").append(bigName).append("Vos(@PathVariable Long[] ids) {\n")
+							.append("\t\ttry {\n")
+							.append("\t\t\treturn Result.success(").append(smName).append("Service.remove").append(bigName).append("Vos(Arrays.asList(ids)));\n")
+							.append("\t\t} catch (Exception e) {\n")
+							.append("\t\t\tlogger.error(\"删除").append(moduleName).append("失败\", e);\n")
+							.append("\t\t\treturn Result.error(BizErrorCodeEnum.BIZ_UNKNOWN_EXCEPTION);\n")
+							.append("\t\t}\n")
+							.append("\t}\n\n")
+					;
 //					//删除
 //					buf.append("\t@GetMapping(value =\"/delete\")\n")
 //							.append("\t@ApiOperation(value = \"删除").append(moduleName).append("\", notes = \"删除").append(moduleName).append("\")\n")
-//							.append("\tpublic BaseResponse<Integer> delete").append(bigName).append("(@RequestParam String id){\n" +
+//							.append("\tpublic BaseResponse<Integer> delete").append(bigName).append("(@RequestParam String id) {\n" +
 //							"\t    return ").append(smName).append("Service.delete").append(smName).append("(id);\n    }\n\n");
-//					//详情
-//					buf.append("\t@GetMapping(value =\"/view/{id}\")\n")
-//							.append("\t@ApiOperation(value = \"").append(moduleName).append("详情\", notes = \"").append(moduleName).append("详情\")\n")
-//							.append("\tpublic BaseResponse<").append(bigName).append("> view").append(bigName).append("(@PathVariable String id){\n" +
-//							"\t    return ").append(smName).append("Service.view").append(smName).append("(id);\n    }\n\n");
-//					//分页
-//					buf.append("\t@GetMapping(value =\"/page\")\n")
-//							.append("\t@ApiOperation(value = \"").append(moduleName).append("分页\", notes = \"").append(moduleName).append("分页\")\n")
-//							.append("\tpublic BaseResponse<PageDTO<").append(bigName).append("DTO>> page").append(bigName).append("(")
-//							.append(bigName).append("Query ").append(smName).append("Query){\n" +
-//							"\t    return ").append(smName).append("Service.page").append(smName).append("(").append(smName).append("Query);\n    }\n\n");
 
 				}
 				else{
@@ -316,7 +334,7 @@ public class DevelopCodeGenerator {
 	 * @return 自动生成的代码
 	 * @throws Exception
 	 */
-	public static String serviceRead(String filePath, String bigName, String smName) throws Exception {
+	public static String serviceRead(String filePath, String bigName) throws Exception {
 		BufferedReader br = null;
 		String line;
 		StringBuilder buf = new StringBuilder();
@@ -327,7 +345,8 @@ public class DevelopCodeGenerator {
 					buf.append(line).append("\n\n")
 							.append("import " + PACKAGE_NAME + ".dao.params.").append(bigName).append("Param;\n")
 							.append("import " + PACKAGE_NAME + ".dao.vo.").append(bigName).append("Vo;\n")
-							.append("import com.example.support.PageResult;\n");
+							.append("import com.example.support.PageResult;\n\n")
+							.append("import java.util.List;\n");
 				}
 				else if (line.contains("{")){
 					buf.append(line).append("\n\n")
@@ -335,9 +354,29 @@ public class DevelopCodeGenerator {
 							.append("\t/**\n")
 							.append("\t * ").append(moduleName).append("分页\n")
 							.append("\t */\n")
-							.append("\tPageResult<").append(bigName).append("Vo> page").append(bigName).append("Vo(").append(bigName).append("Param param);\n");
+							.append("\tPageResult<").append(bigName).append("Vo> page").append(bigName).append("Vo(").append(bigName).append("Param param);\n")
+							// 详情
+							.append("\t/**\n")
+							.append("\t * ").append(moduleName).append("详情\n")
+							.append("\t */\n")
+							.append("\t").append(bigName).append("Vo view").append(bigName).append("Vo(Long id);\n\n")
+							// 编辑
+							.append("\t/**\n")
+							.append("\t * ").append(moduleName).append("编辑\n")
+							.append("\t */\n")
+							.append("\tInteger edit").append(bigName).append("Vo(").append(bigName).append("Vo vo);\n\n")
+							// 新增
+							.append("\t/**\n")
+							.append("\t * ").append(moduleName).append("新增\n")
+							.append("\t */\n")
+							.append("\t").append(bigName).append("Vo add").append(bigName).append("Vo(").append(bigName).append("Vo vo);\n\n")
+							// 删除
+							.append("\t/**\n")
+							.append("\t * ").append(moduleName).append("删除\n")
+							.append("\t */\n")
+							.append("\tInteger remove").append(bigName).append("Vos(List<Long> ids);\n\n")
+					;
 
-					// 可增加
 				}
 				else{
 					buf.append(line).append("\n");
@@ -359,7 +398,7 @@ public class DevelopCodeGenerator {
 	 * @return 自动生成的代码
 	 * @throws Exception
 	 */
-	public static String serviceImplRead(String filePath, String bigName, String smName) throws Exception {
+	public static String serviceImplRead(String filePath, String bigName) throws Exception {
 		BufferedReader br = null;
 		String line;
 		StringBuilder buf = new StringBuilder();
@@ -372,11 +411,13 @@ public class DevelopCodeGenerator {
 							.append("import " + PACKAGE_NAME + ".dao.params.").append(bigName).append("Param;\n")
 							.append("import " + PACKAGE_NAME + ".dao.vo.").append(bigName).append("Vo;\n")
 							.append("import com.example.support.AppPage;\n")
-							.append("import com.example.support.PageResult;\n")
+							.append("import com.example.support.PageResult;\n\n")
 							.append("import java.util.List;\n");
 				}
 				else if (line.contains("{")){
 					//查詢
+					// 分页
+					// 详情
 					buf.append(line).append("\n\n")
 							// 分页
 							.append("\t/**\n")
@@ -388,7 +429,44 @@ public class DevelopCodeGenerator {
 							.append("\t\tList<").append(bigName).append("> entityList = this.lambdaQuery().page(new AppPage<>(param)).getRecords();\n")
 							.append("\t\tappPage.setRecords(I").append(bigName).append("Converter.INSTANCE.toVoList(entityList));\n")
 							.append("\t\treturn new PageResult<>(appPage);\n")
-							.append("\t}\n\n");
+							.append("\t}\n\n")
+							// 详情
+							.append("\t/**\n")
+							.append("\t * ").append(moduleName).append("详情\n")
+							.append("\t */\n")
+							.append("\t@Override\n")
+							.append("\tpublic ").append(bigName).append("Vo view").append(bigName).append("Vo(Long id) {\n")
+							.append("\t\t").append(bigName).append(" entity = this.getById(id);\n")
+							.append("\t\treturn I").append(bigName).append("Converter.INSTANCE.toVo(entity);\n")
+							.append("\t}\n\n")
+							// 编辑
+							.append("\t/**\n")
+							.append("\t * ").append(moduleName).append("编辑\n")
+							.append("\t */\n")
+							.append("\t@Override\n")
+							.append("\tpublic Integer edit").append(bigName).append("Vo(").append(bigName).append("Vo vo) {\n")
+							.append("\t\t").append(bigName).append(" entity = I").append(bigName).append("Converter.INSTANCE.toEntity(vo);\n")
+							.append("\t\treturn this.baseMapper.updateById(entity);\n")
+							.append("\t}\n\n")
+							// 新增
+							.append("\t/**\n")
+							.append("\t * ").append(moduleName).append("新增\n")
+							.append("\t */\n")
+							.append("\t@Override\n")
+							.append("\tpublic ").append(bigName).append("Vo add").append(bigName).append("Vo(").append(bigName).append("Vo vo) {\n")
+							.append("\t\t").append(bigName).append(" entity = I").append(bigName).append("Converter.INSTANCE.toEntity(vo);\n")
+							.append("\t\treturn this.save(entity) ? IPoleTypeConverter.INSTANCE.toVo(this.getById(entity.getId())) : null;\n")
+							.append("\t}\n\n")
+							// 删除
+							.append("\t/**\n")
+							.append("\t * ").append(moduleName).append("删除\n")
+							.append("\t */\n")
+							.append("\t@Override\n")
+							.append("\tpublic Integer remove").append(bigName).append("Vos(List<Long> ids) {\n")
+							.append("\t\treturn this.baseMapper.deleteBatchIds(ids);\n")
+							.append("\t}\n\n")
+
+					;
 				
 					// 可增加
 				}
@@ -412,7 +490,7 @@ public class DevelopCodeGenerator {
 	 * @return 自动生成的代码
 	 * @throws Exception
 	 */
-	public static String entityRead(String filePath, String bigName, String smName) throws Exception {
+	public static String entityRead(String filePath) throws Exception {
 		BufferedReader br = null;
 		String line;
 		StringBuilder buf = new StringBuilder();
@@ -442,7 +520,7 @@ public class DevelopCodeGenerator {
 	 * @return 自动生成的代码
 	 * @throws Exception
 	 */
-	public static String mapperRead(String filePath, String bigName, String smName) throws Exception {
+	public static String mapperRead(String filePath, String bigName) throws Exception {
 		BufferedReader br = null;
 		String line;
 		StringBuilder buf = new StringBuilder();
@@ -484,7 +562,7 @@ public class DevelopCodeGenerator {
 	 * @return 自动生成的代码
 	 * @throws Exception
 	 */
-	public static String xmlRead(String filePath, String bigName, String smName) throws Exception {
+	public static String xmlRead(String filePath, String bigName) throws Exception {
 		BufferedReader br = null;
 		String line;
 		StringBuilder buf = new StringBuilder();
@@ -539,7 +617,9 @@ public class DevelopCodeGenerator {
 					"\tI" + bigName + "Converter" + " INSTANCE = Mappers.getMapper(I" +
 					bigName + "Converter.class);\n\n" +
 					"\t" + bigName + "Vo toVo(" + bigName + " entity);\n\n" +
-					"\tList<" + bigName + "Vo> toVoList(List<" + bigName + "> " + "entityList);\n\n}";
+					"\tList<" + bigName + "Vo> toVoList(List<" + bigName + "> entityList);\n\n" +
+					"\t" + bigName + " toEntity(" + bigName + "Vo vo);\n\n" +
+					"\tList<" + bigName + "> toEntityList(List<" + bigName + "Vo> voList);\n\n}";
 			if (mkdir(filePath)) {
 				write(filePath, converter);
 			}
@@ -598,6 +678,34 @@ public class DevelopCodeGenerator {
 	}
 
 
+	private static String getOutputDirJava() {
+		return PACKAGE_DIR + "/src/main/java";
+	}
+	private static String getOutputDirResources() {
+		return PACKAGE_DIR + "/src/main/resources";
+	}
+
+	private static LinkedHashMap<String, String> getFilepathMap() {
+		LinkedHashMap<String, String> filepathMap = new LinkedHashMap<>();
+		String bigName = getBigName();
+		String packageName = PACKAGE_NAME.replaceAll("\\.", "/");
+		String javaFilePath = getOutputDirJava() + "/" + packageName;
+		String resourcesFilePath = getOutputDirResources() + "/" + packageName;
+		// 自动生成文件
+		filepathMap.put("Controller", javaFilePath + "/controller/" + bigName + "Controller.java");
+		filepathMap.put("Service", javaFilePath + "/service/I" + bigName + "Service.java");
+		filepathMap.put("ServiceImpl", javaFilePath + "/service/impl/" + bigName + "ServiceImpl.java");
+		filepathMap.put("Entity", javaFilePath + "/entity/" + bigName + ".java");
+		filepathMap.put("Mapper", javaFilePath + "/mapper/" + bigName + "Mapper.java");
+		filepathMap.put("XmlTemplate", resourcesFilePath + "/mapper/");
+		filepathMap.put("Xml", resourcesFilePath + "/mapper/" + bigName + "Mapper.xml");
+		// 自定义生成文件
+		filepathMap.put("Converter", javaFilePath + "/dao/converter/" + "I" + bigName + "Converter.java");
+		filepathMap.put("Param", javaFilePath + "/dao/params/" + bigName + "Param.java");
+		filepathMap.put("Vo", javaFilePath + "/dao/vo/" + bigName + "Vo.java");
+		return filepathMap;
+	}
+
 	private static String getBigName() {
 		//获取去掉前缀后的
 		String trueName="";
@@ -616,29 +724,10 @@ public class DevelopCodeGenerator {
 		}
 		return bigName.toString();
 	}
-
 	private static String getSmallName() {
 		String bigName = getBigName();
 		if (StringUtils.isEmpty(bigName)) { return null; }
 		return bigName.substring(0,1).toLowerCase(Locale.ROOT)+bigName.substring(1);
-	}
-
-	private static LinkedHashMap<String, String> getFilepathMap() {
-		LinkedHashMap<String, String> filepathMap = new LinkedHashMap<>();
-		String bigName = getBigName();
-		// 自动生成文件
-		filepathMap.put("Controller", JAVA_FILE_PATH + "/controller/" + bigName + "Controller.java");
-		filepathMap.put("Service", JAVA_FILE_PATH + "/service/I" + bigName + "Service.java");
-		filepathMap.put("ServiceImpl", JAVA_FILE_PATH + "/service/impl/" + bigName + "ServiceImpl.java");
-		filepathMap.put("Entity", JAVA_FILE_PATH + "/entity/" + bigName + ".java");
-		filepathMap.put("Mapper", JAVA_FILE_PATH + "/mapper/" + bigName + "Mapper.java");
-		filepathMap.put("XmlTemplate", RESOURCES_FILE_PATH + "/mapper/");
-		filepathMap.put("Xml", RESOURCES_FILE_PATH + "/mapper/" + bigName + "Mapper.xml");
-		// 自定义生成文件
-		filepathMap.put("Converter", JAVA_FILE_PATH + "/dao/converter/" + "I" + bigName + "Converter.java");
-		filepathMap.put("Param", JAVA_FILE_PATH + "/dao/params/" + bigName + "Param.java");
-		filepathMap.put("Vo", JAVA_FILE_PATH + "/dao/vo/" + bigName + "Vo.java");
-		return filepathMap;
 	}
 
 	/**

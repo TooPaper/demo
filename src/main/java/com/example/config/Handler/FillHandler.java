@@ -20,7 +20,7 @@ public class FillHandler implements MetaObjectHandler {
         this.strictInsertFill(metaObject, "createUser", Long.class, 1L);
         this.strictInsertFill(metaObject, "createUsername", String.class, "demo");
         this.strictInsertFill(metaObject, "createDate", LocalDateTime.class, LocalDateTime.now());
-        this.strictInsertFill(metaObject, "states", String.class,"1");
+        this.strictInsertFill(metaObject, "state", Integer.class,1);
     }
 
     @Override

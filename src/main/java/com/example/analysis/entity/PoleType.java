@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author demo
- * @since 2022-07-06
+ * @since 2022-07-07
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -34,17 +34,17 @@ public class PoleType implements Serializable {
     private Long id;
 
     @ApiModelProperty(value = "类型编号")
-    private Long typeCode;
+    private String typeCode;
 
     @ApiModelProperty(value = "父类类型编号")
-    private Long parentTypeCode;
+    private String parentTypeCode;
 
     @ApiModelProperty(value = "类型名称")
     private String typeName;
 
     @ApiModelProperty(value = "创建人")
     @TableField(fill = FieldFill.INSERT)
-    private String createUser;
+    private Long createUser;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
@@ -52,7 +52,7 @@ public class PoleType implements Serializable {
 
     @ApiModelProperty(value = "更新人")
     @TableField(fill = FieldFill.UPDATE)
-    private String updateUser;
+    private Long updateUser;
 
     @ApiModelProperty(value = "更新时间")
     @TableField(fill = FieldFill.UPDATE)

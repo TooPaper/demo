@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @Author: demo
- * @Date: 2022-07-06T17:06:53.163
+ * @Date: 2022-07-07T13:32:06.361
  */
 @ApiModel(value="PoleTypeConverter", description="杆样式颜色类型转换器")
 @Mapper(componentModel = "Spring")
@@ -21,5 +21,9 @@ public interface IPoleTypeConverter {
 	PoleTypeVo toVo(PoleType entity);
 
 	List<PoleTypeVo> toVoList(List<PoleType> entityList);
+
+	PoleType toEntity(PoleTypeVo vo);
+
+	List<PoleType> toEntityList(List<PoleTypeVo> voList);
 
 }
